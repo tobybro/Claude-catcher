@@ -98,12 +98,12 @@ export const visualAuditAgent: AuditAgent = {
       const networkFailures: { url: string; status: number; requestUrl: string }[] = [];
 
       const page = await context.newPage();
-      page.on("console", (msg) => {
+      page.on("console", (msg: any) => {
         if (msg.type() === "error") {
           consoleErrors.push({ url: page.url(), message: msg.text() });
         }
       });
-      page.on("response", (response) => {
+      page.on("response", (response: any) => {
         if (response.status() >= 400) {
           networkFailures.push({
             url: page.url(),
@@ -190,7 +190,7 @@ export const visualAuditAgent: AuditAgent = {
           await page.setViewportSize({ width: 1440, height: 900 });
 
           // Discover internal links
-          const links = await page.evaluate((base) => {
+          const links = await page.evaluate((base: string) => {
             const anchors = document.querySelectorAll("a[href]");
             return Array.from(anchors)
               .map((a) => a.getAttribute("href"))
