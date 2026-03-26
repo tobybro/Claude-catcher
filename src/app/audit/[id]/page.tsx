@@ -10,7 +10,6 @@ export default async function AuditPage({ params }: { params: Promise<{ id: stri
   const { id } = await params;
   const report = getReport(id);
 
-  // If report isn't ready yet, show progress tracker
   if (!report) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
@@ -19,35 +18,59 @@ export default async function AuditPage({ params }: { params: Promise<{ id: stri
     );
   }
 
-  return (
-    <main className="min-h-screen px-4 py-8 max-w-4xl mx-auto space-y-6">
-      {/* Back link */}
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-      >
-        <svg className="w-4 h-4" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        New Audit
-      </Link>
+  // Group categories: worst scores first, but separate zero-findings categories
+  const withIssues = report.categories
+    .filter((c) => c.findings.length > 0)
+    .sort((a, b) => a.score - b.score);
+  const clean = report.categories
+    .filter((c) => c.findings.length === 0)
+    .sort((a, b) => a.label.localeCompare(b.label));
 
-      {/* Report header with score */}
+  return (
+    <main className="min-h-screen px-4 py-6 max-w-5xl mx-auto space-y-5">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-sm">
+        <Link
+          href="/"
+          className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+        >
+          Home
+        </Link>
+        <span className="text-gray-300 dark:text-gray-600">/</span>
+        <Link
+          href="/history"
+          className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+        >
+          History
+        </Link>
+        <span className="text-gray-300 dark:text-gray-600">/</span>
+        <span className="text-gray-600 dark:text-gray-400 font-medium truncate">{report.repoName}</span>
+      </div>
+
+      {/* Dashboard header with all scores + top issues */}
       <ReportHeader report={report} />
 
-      {/* Category sections */}
-      <div className="space-y-4">
-        {report.categories
-          .sort((a, b) => a.score - b.score) // Worst first
-          .map((category) => (
-            <CategorySection key={category.category} category={category} />
-          ))}
+      {/* Category detail sections */}
+      <div className="space-y-3">
+        {/* Sections with findings first */}
+        {withIssues.map((category) => (
+          <CategorySection key={category.category} category={category} />
+        ))}
+
+        {/* Clean sections collapsed */}
+        {clean.length > 0 && (
+          <div className="space-y-3">
+            {clean.map((category) => (
+              <CategorySection key={category.category} category={category} />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Footer */}
-      <footer className="text-center text-sm text-gray-400 pt-8 pb-4">
-        Claude Catcher &middot; Audit ID: {report.id} &middot;{" "}
-        {new Date(report.createdAt).toISOString().split("T")[0]}
+      <footer className="text-center text-xs text-gray-400 dark:text-gray-500 pt-6 pb-4 space-y-1">
+        <p>Audit ID: <span className="font-mono">{report.id}</span></p>
+        <p>{new Date(report.createdAt).toISOString().split("T")[0]}</p>
       </footer>
     </main>
   );
