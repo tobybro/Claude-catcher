@@ -13,6 +13,7 @@ const AGENT_LABELS: Record<string, string> = {
   "product-completeness": "Product Completeness",
   performance: "Performance",
   "visual-audit": "Visual & Flow Audit",
+  "idea-evaluation": "Idea & Product Evaluation",
 };
 
 const TIMEOUT_MS = 180000; // 3 minutes

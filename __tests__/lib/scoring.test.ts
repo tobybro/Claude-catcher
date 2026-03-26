@@ -103,11 +103,12 @@ describe("computeOverallScore", () => {
 });
 
 describe("buildCategorySummaries", () => {
-  it("creates summaries for all 7 categories", () => {
+  it("creates summaries for all 8 categories", () => {
     const summaries = buildCategorySummaries([]);
-    expect(summaries).toHaveLength(7);
+    expect(summaries).toHaveLength(8);
     expect(summaries.map((s) => s.category)).toContain("security");
     expect(summaries.map((s) => s.category)).toContain("visual-audit");
+    expect(summaries.map((s) => s.category)).toContain("idea-evaluation");
   });
 
   it("groups findings by category", () => {

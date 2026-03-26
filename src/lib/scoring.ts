@@ -8,6 +8,7 @@ const CATEGORY_META: Record<Category, { label: string; icon: string }> = {
   "product-completeness": { label: "Product Completeness", icon: "CheckCircle" },
   performance: { label: "Performance", icon: "Zap" },
   "visual-audit": { label: "Visual & Flow Audit", icon: "Monitor" },
+  "idea-evaluation": { label: "Idea & Product Evaluation", icon: "Lightbulb" },
 };
 
 export function computeCategoryScore(findings: Finding[]): number {

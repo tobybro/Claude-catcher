@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Claude Catcher — Auto-audit on every commit
+# Runs a quick audit (skips visual agent) and reports findings.
+# Exit code 0 always — post-commit hooks should not block.
+
+echo ""
+echo "🔍 Claude Catcher: Running post-commit audit..."
+echo ""
+
+npx tsx bin/audit.ts --quick --hook . 2>/dev/null || true

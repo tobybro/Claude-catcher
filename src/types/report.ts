@@ -7,7 +7,8 @@ export type Category =
   | "security"
   | "product-completeness"
   | "performance"
-  | "visual-audit";
+  | "visual-audit"
+  | "idea-evaluation";
 
 export interface Finding {
   id: string;
