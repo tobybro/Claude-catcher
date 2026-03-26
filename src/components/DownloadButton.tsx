@@ -10,7 +10,7 @@ export function DownloadButton({ report }: { report: AuditReport }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `claude-catcher-report-${report.repoName.replace("/", "-")}.json`;
+    a.download = `claude-catcher-report-${report.repoName.replaceAll("/", "-")}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

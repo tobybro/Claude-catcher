@@ -24,7 +24,7 @@ export default function HomePage() {
       <AuditForm />
 
       {/* Features grid */}
-      <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl w-full">
+      <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl w-full">
         {[
           { icon: "🔍", label: "Code Quality", desc: "Syntax, dead code, types" },
           { icon: "👁", label: "UX Audit", desc: "Accessibility, responsive" },

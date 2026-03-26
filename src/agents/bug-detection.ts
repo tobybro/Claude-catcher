@@ -44,8 +44,8 @@ export const bugDetectionAgent: AuditAgent = {
         }
       });
 
-      // Async functions without try/catch
-      const asyncFnRegex = /async\s+(?:function\s+\w+|[\w]+)\s*\(/g;
+      // Async functions without try/catch (covers declarations, methods, and arrow functions)
+      const asyncFnRegex = /async\s+(?:function\s+\w+|\w+)\s*\(|=\s*async\s*(?:\([^)]*\)|\w+)\s*=>/g;
       let asyncMatch;
       while ((asyncMatch = asyncFnRegex.exec(content)) !== null) {
         const startIdx = asyncMatch.index;

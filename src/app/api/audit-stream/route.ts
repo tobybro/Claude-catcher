@@ -7,11 +7,14 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
 
-  if (!id) {
-    return new Response("Missing id parameter", { status: 400 });
+  if (!id || !/^[a-zA-Z0-9-]+$/.test(id)) {
+    return new Response("Missing or invalid id parameter", { status: 400 });
   }
 
   const encoder = new TextEncoder();
+  let cleanup: (() => void) | null = null;
+  let timeoutHandle: ReturnType<typeof setTimeout> | null = null;
+
   const stream = new ReadableStream({
     start(controller) {
       const emitter = getAuditEmitter(id);
@@ -42,6 +45,7 @@ export async function GET(request: NextRequest) {
           );
         } catch {
           // Stream closed
+          doCleanup();
         }
       };
 
@@ -56,19 +60,34 @@ export async function GET(request: NextRequest) {
         } catch {
           // Stream closed
         }
-        cleanup();
+        doCleanup();
       };
 
-      const cleanup = () => {
+      const doCleanup = () => {
         emitter.removeListener("progress", onProgress);
         emitter.removeListener("complete", onComplete);
+        if (timeoutHandle) clearTimeout(timeoutHandle);
       };
+
+      cleanup = doCleanup;
 
       emitter.on("progress", onProgress);
       emitter.on("complete", onComplete);
 
+      // Re-check completion after attaching listeners (race condition fix)
+      if (reportExists(id)) {
+        controller.enqueue(
+          encoder.encode(
+            `data: ${JSON.stringify({ status: "complete", reportId: id })}\n\n`
+          )
+        );
+        controller.close();
+        doCleanup();
+        return;
+      }
+
       // Timeout after 5 minutes
-      setTimeout(() => {
+      timeoutHandle = setTimeout(() => {
         try {
           controller.enqueue(
             encoder.encode(
@@ -79,8 +98,13 @@ export async function GET(request: NextRequest) {
         } catch {
           // Already closed
         }
-        cleanup();
+        doCleanup();
       }, 300000);
+    },
+
+    // Clean up listeners when client disconnects
+    cancel() {
+      if (cleanup) cleanup();
     },
   });
 

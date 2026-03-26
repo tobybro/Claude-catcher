@@ -53,6 +53,7 @@ export const visualAuditAgent: AuditAgent = {
     }
 
     let appProcess: AppProcess | null = null;
+    let browser: any = null;
 
     try {
       // Try to start the app
@@ -89,7 +90,7 @@ export const visualAuditAgent: AuditAgent = {
         return findings;
       }
 
-      const browser = await chromium.launch({ headless: true });
+      browser = await chromium.launch({ headless: true });
       const context = await browser.newContext();
 
       // Collect console errors and network failures
@@ -279,6 +280,7 @@ export const visualAuditAgent: AuditAgent = {
       }
 
       await browser.close();
+      browser = null;
     } catch (err) {
       findings.push({
         id: generateId("vis"),
@@ -290,6 +292,10 @@ export const visualAuditAgent: AuditAgent = {
         recommendation: "Check that the project can be started and accessed locally.",
       });
     } finally {
+      // Always clean up browser and app process
+      if (browser) {
+        try { await browser.close(); } catch {}
+      }
       if (appProcess) {
         await stopApp(appProcess);
       }

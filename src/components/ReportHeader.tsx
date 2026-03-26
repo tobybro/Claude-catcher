@@ -27,7 +27,7 @@ export function ReportHeader({ report }: { report: AuditReport }) {
         </div>
 
         {/* Summary badges */}
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           {report.summary.critical > 0 && (
             <div className="text-center px-4 py-2 bg-red-50 rounded-xl border border-red-200">
               <div className="text-2xl font-bold text-red-600">{report.summary.critical}</div>

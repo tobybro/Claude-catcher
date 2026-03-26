@@ -55,13 +55,15 @@ export function AuditForm() {
           value={repoUrl}
           onChange={(e) => setRepoUrl(e.target.value)}
           placeholder="https://github.com/username/repository"
+          aria-label="GitHub repository URL"
+          aria-describedby={error ? "audit-error" : undefined}
           className="w-full px-6 py-4 text-lg bg-white border-2 border-gray-200 rounded-2xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all placeholder:text-gray-400"
           disabled={isLoading}
         />
       </div>
 
       {error && (
-        <p className="text-red-600 text-sm px-2">{error}</p>
+        <p id="audit-error" role="alert" className="text-red-600 text-sm px-2">{error}</p>
       )}
 
       <button

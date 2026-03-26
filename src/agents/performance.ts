@@ -120,7 +120,10 @@ export const performanceAgent: AuditAgent = {
     }
 
     // Only flag if this is a Next.js project
-    if (fs.existsSync(path.join(repoPath, "next.config.js")) || fs.existsSync(path.join(repoPath, "next.config.mjs"))) {
+    const isNextJs = ["next.config.js", "next.config.mjs", "next.config.ts"].some(
+      (f) => fs.existsSync(path.join(repoPath, f))
+    );
+    if (isNextJs) {
       if (usesRawImg && !usesNextImage) {
         findings.push({
           id: generateId("perf"),

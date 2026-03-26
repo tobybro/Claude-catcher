@@ -30,6 +30,7 @@ export const productCompletenessAgent: AuditAgent = {
       // 1. Missing loading states
       const fetchPatterns = /\b(useSWR|useQuery|fetch\(|axios\.|api\.|\.get\(|\.post\()/g;
       let fetchMatch;
+      fetchPatterns.lastIndex = 0;
       while ((fetchMatch = fetchPatterns.exec(content)) !== null) {
         const lineNum = content.substring(0, fetchMatch.index).split("\n").length;
         const surroundingCode = content.substring(
