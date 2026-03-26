@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverComponentsExternalPackages: ['simple-git', 'playwright'],
+    serverComponentsExternalPackages: ['simple-git', 'playwright', 'better-sqlite3'],
   },
 };
 

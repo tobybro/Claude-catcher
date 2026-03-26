@@ -5,7 +5,7 @@ import { formatDuration } from "@/lib/utils";
 
 export function ReportHeader({ report }: { report: AuditReport }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8">
       <div className="flex flex-col md:flex-row items-center gap-8">
         {/* Score */}
         <div className="flex-shrink-0">
@@ -14,10 +14,10 @@ export function ReportHeader({ report }: { report: AuditReport }) {
 
         {/* Info */}
         <div className="flex-1 text-center md:text-left space-y-2">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             Audit Report
           </h1>
-          <p className="text-gray-500 font-mono text-sm">
+          <p className="text-gray-500 dark:text-gray-400 font-mono text-sm">
             {report.repoName}
           </p>
           <p className="text-gray-400 text-sm">

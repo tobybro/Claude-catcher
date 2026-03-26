@@ -24,7 +24,7 @@ export default async function AuditPage({ params }: { params: Promise<{ id: stri
       {/* Back link */}
       <Link
         href="/"
-        className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
+        className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
       >
         <svg className="w-4 h-4" aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />

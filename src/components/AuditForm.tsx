@@ -57,7 +57,7 @@ export function AuditForm() {
           placeholder="https://github.com/username/repository"
           aria-label="GitHub repository URL"
           aria-describedby={error ? "audit-error" : undefined}
-          className="w-full px-6 py-4 text-lg bg-white border-2 border-gray-200 rounded-2xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all placeholder:text-gray-400"
+          className="w-full px-6 py-4 text-lg bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-2xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900 outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500 text-gray-900 dark:text-gray-100"
           disabled={isLoading}
         />
       </div>
@@ -69,7 +69,7 @@ export function AuditForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full py-4 px-8 text-lg font-semibold text-white bg-indigo-600 rounded-2xl hover:bg-indigo-700 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-colors shadow-lg shadow-indigo-200"
+        className="w-full py-4 px-8 text-lg font-semibold text-white bg-indigo-600 rounded-2xl hover:bg-indigo-700 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-colors shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30"
       >
         {isLoading ? (
           <span className="flex items-center justify-center gap-3">

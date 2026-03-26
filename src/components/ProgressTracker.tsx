@@ -163,7 +163,7 @@ export function ProgressTracker({ auditId }: { auditId: string }) {
           return (
             <div
               key={key}
-              className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border border-gray-100 shadow-sm"
+              className="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm"
             >
               <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
                 {status === "complete" ? (

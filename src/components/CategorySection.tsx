@@ -13,14 +13,14 @@ export function CategorySection({ category }: { category: CategorySummary }) {
   const infoCount = category.findings.filter((f) => f.severity === "info").length;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-4 p-6 text-left hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center gap-4 p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
       >
         <ScoreBadge score={category.score} size="sm" />
         <div className="flex-1 min-w-0">
-          <h3 className="font-bold text-gray-900">{category.label}</h3>
+          <h3 className="font-bold text-gray-900 dark:text-gray-100">{category.label}</h3>
           <div className="flex gap-3 mt-1">
             {criticalCount > 0 && (
               <span className="text-xs text-red-600 font-medium">
@@ -55,7 +55,7 @@ export function CategorySection({ category }: { category: CategorySummary }) {
       </button>
 
       {isOpen && category.findings.length > 0 && (
-        <div className="px-6 pb-6 space-y-4 border-t border-gray-100 pt-4">
+        <div className="px-6 pb-6 space-y-4 border-t border-gray-100 dark:border-gray-700 pt-4">
           {category.findings
             .sort((a, b) => {
               const order = { critical: 0, warning: 1, info: 2 };
